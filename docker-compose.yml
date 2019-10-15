@@ -1,0 +1,34 @@
+version: '3.5'
+networks:
+  keycloak-network:
+    name: keycloak-network
+    driver: bridge
+services:
+  postgres:
+    image: "postgres"
+    container_name: postgres
+    networks:
+      - keycloak-network
+    environment:
+    - POSTGRES_DB=keycloak
+    - POSTGRES_USER=keycloak
+    - POSTGRES_PASSWORD=password
+  keycloak:
+    build: .
+    image: selflet-keycloak
+    container_name: selflet-keycloak
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/tmp
+    #command: >
+     #/opt/jboss/keycloak/bin/standalone.sh &&
+     #bash -c "ping localhost
+     #&& ping localhost"
+    networks:
+      - keycloak-network
+    environment:
+      - DB_USER=keycloak
+      - DB_PASSWORD=password
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
