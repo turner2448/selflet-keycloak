@@ -6,7 +6,7 @@ networks:
 services:
   postgres:
     image: "postgres"
-    container_name: postgres
+    container_name: agency_postgres
     networks:
       - keycloak-network
     environment:
@@ -32,3 +32,4 @@ services:
       - DB_PASSWORD=password
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=password
+
